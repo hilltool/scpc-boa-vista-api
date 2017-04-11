@@ -1,0 +1,27 @@
+{
+    "name": "artenes/scpc_boa_vista",
+    "description": "Package to consume SCPC Boa Vista API",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Artenes Nogueira",
+            "email": "artenesama@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "guzzlehttp/guzzle": "^6.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Artenes\\SCPCBoaVista\\": "src\\"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    }
+}
