@@ -1,11 +1,43 @@
 <?php
 
 use Artenes\SCPCBoaVista\API;
-use Artenes\SCPCBoaVista\BoaVistaResponseException;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Test for API class.
+ *
+ * To run the tests make sure to have proper access to Boa Vista's API.
+ */
 class APITest extends TestCase
 {
+
+    /**
+     * Code for authentication.
+     *
+     * @var string
+     */
+    protected $code = '00000045';
+
+    /**
+     * Password for authentication.
+     *
+     * @var string
+     */
+    protected $password = 'HOM096';
+
+    /**
+     * API's instance.
+     *
+     * @var API
+     */
+    protected $api;
+
+    public function setUp()
+    {
+
+        $this->api = new API($this->code, $this->password);
+
+    }
 
     /**
      * @test
@@ -13,15 +45,11 @@ class APITest extends TestCase
     public function throws_exception_when_password_is_invalid()
     {
 
-        $this->expectException(BoaVistaResponseException::class);
-
-        $code = '00000045';
-        $password = 'M2110A';
-
-        $api = new API($code, $password);
+        $this->expectExceptionMessage('* SENHA INVALIDA');
 
         $params = [
 
+            'senha' => 'invalida',
             'consulta' => 'BVSNET4F',
             'documento' => '00193000180',
             'uf' => 'PA',
@@ -29,7 +57,7 @@ class APITest extends TestCase
 
         ];
 
-        $api->consult($params);
+        $this->api->consult($params);
 
     }
 
