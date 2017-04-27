@@ -35,7 +35,7 @@ class API
 
     /**
      * These are the fields that must be sent to the API.
-     * Each one has a size on bytes, since the request
+     * Each one has a size in bytes, since the request
      * data must be in a positional string.
      *
      * @var array
@@ -75,7 +75,7 @@ class API
 
     /**
      * These are the fields that will be returned by the API.
-     * Each one has a size on bytes, since the response
+     * Each one has a size in bytes, since the response
      * data it is in a positional string.
      *
      * @var array
