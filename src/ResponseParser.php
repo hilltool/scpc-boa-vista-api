@@ -111,6 +111,19 @@ class ResponseParser
     }
 
     /**
+     * Trim all white spaces and <PRE> tags
+     * from the API's response.
+     *
+     * @return string
+     */
+    public function cleanResponse()
+    {
+
+        return trim(trim(trim($this->rawResponse), '</PRE>'));
+
+    }
+
+    /**
      * Extract a value from the rawResponse
      * and move the pointer.
      *
@@ -138,19 +151,6 @@ class ResponseParser
 
         $value = $size != null ? substr($this->cleanResponse, $this->pointer, $size) : substr($this->cleanResponse, $this->pointer);
         return trim($value);
-
-    }
-
-    /**
-     * Trim all white spaces and <PRE> tags
-     * from the API's response.
-     *
-     * @return string
-     */
-    protected function cleanResponse()
-    {
-
-        return trim(trim(trim($this->rawResponse), '</PRE>'));
 
     }
 

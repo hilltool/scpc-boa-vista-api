@@ -69,6 +69,20 @@ class Client
     protected $production;
 
     /**
+     * The last compiled query.
+     *
+     * @var string
+     */
+    protected $lastRawQueryArgs;
+
+    /**
+     * The last raw response.
+     *
+     * @var string
+     */
+    protected $lastRawResponse;
+
+    /**
      * Client constructor.
      *
      * @param string $code
@@ -110,6 +124,8 @@ class Client
 
         $query = $queryBuilder->build();
 
+        $this->lastRawQueryArgs = $query;
+
         $rawResponse = $this->httpClient->get($this->queryUri,
             array('query' => array('consulta' => $query))
         )->getBody()->getContents();
@@ -117,6 +133,8 @@ class Client
         $responseParser = new ResponseParser($rawResponse);
 
         $response = $responseParser->parse();
+
+        $this->lastRawResponse = $responseParser->cleanResponse();
 
         $this->throwExceptionIfHasError($response);
 
@@ -139,6 +157,30 @@ class Client
         $params = $this->evaluateDocumentType($params);
 
         return $params;
+
+    }
+
+    /**
+     * Gets the last query executed.
+     *
+     * @return string
+     */
+    public function getLastQuery()
+    {
+
+        return $this->getUri() . '/' . $this->queryUri . '?consulta=' . $this->lastRawQueryArgs;
+
+    }
+
+    /**
+     * Gets the last response received.
+     *
+     * @return string
+     */
+    public function getLastResponse()
+    {
+
+        return $this->lastRawResponse;
 
     }
 
@@ -218,8 +260,5 @@ class Client
         return $this->production ? $this->baseProductionUri : $this->baseTestUri;
 
     }
-
-
-
 
 }
