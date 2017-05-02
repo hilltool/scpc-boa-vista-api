@@ -40,11 +40,18 @@ class Client
     protected $throwsExceptionOnError;
 
     /**
-     * Base uri to access the API.
+     * Base uri to access the API for tests.
      *
      * @var string
      */
-    protected $baseUri = 'https://bvsntt.bvsnet.com.br';
+    protected $baseTestUri = 'https://bvsntt.bvsnet.com.br';
+
+    /**
+     * Base uri to access the API for production.
+     *
+     * @var string
+     */
+    protected $baseProductionUri = 'https://www.bvsnet.com.br';
 
     /**
      * Uri to make the consult.
@@ -54,23 +61,33 @@ class Client
     protected $queryUri = 'cgi-bin/db2www/netpo028.mbr/string';
 
     /**
+     * Defines if the client is for
+     * production or not;
+     *
+     * @var
+     */
+    protected $production;
+
+    /**
      * Client constructor.
      *
      * @param string $code
      * @param string $password
-     * @param array $config
+     * @param bool $production
      * @param bool $throwsExceptionOnError
+     * @param array $config
      * @internal param $httpClient
      */
-    public function __construct($code = '', $password = '', $config = array(), $throwsExceptionOnError = true)
+    public function __construct($code = '', $password = '', $production = false, $throwsExceptionOnError = true, $config = array())
     {
 
         $this->code = $code;
         $this->password = $password;
         $this->throwsExceptionOnError = $throwsExceptionOnError;
+        $this->production = $production;
 
         $default = array(
-            'base_uri' => $this->baseUri,
+            'base_uri' => $this->getUri(),
             'verify' => false
         );
 
@@ -140,6 +157,19 @@ class Client
                 $response['12']['999']['03'],
                 $response['12']['999']['02']
             );
+
+    }
+
+    /**
+     * Gets the uri based on the
+     * environment (production or test).
+     *
+     * @return string
+     */
+    protected function getUri()
+    {
+
+        return $this->production ? $this->baseProductionUri : $this->baseTestUri;
 
     }
 
