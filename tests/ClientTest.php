@@ -58,4 +58,42 @@ class ClientTest extends TestCase
 
     }
 
+    /**
+     * @test
+     */
+    public function append_default_values_to_params()
+    {
+
+        $params = array(
+            '12' => '00193000180',
+            '13' => 'PA'
+        );
+
+        $client = new Client('code', 'password');
+
+        $this->assertEquals(array(
+            '12' => '00193000180',
+            '13' => 'PA',
+            '05' => 'code',
+            '06' => 'password',
+            '11' => '1',
+            '07' => 'BVSNET4F',
+        ), $client->appendDefaults($params));
+
+        $params = array(
+            '12' => '84726475263763',
+            '13' => 'SP'
+        );
+
+        $this->assertEquals(array(
+            '12' => '84726475263763',
+            '13' => 'SP',
+            '05' => 'code',
+            '06' => 'password',
+            '11' => '2',
+            '07' => 'BVSNET4J',
+        ), $client->appendDefaults($params));
+
+    }
+
 }

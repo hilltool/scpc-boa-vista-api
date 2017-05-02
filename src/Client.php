@@ -64,7 +64,7 @@ class Client
      * Defines if the client is for
      * production or not;
      *
-     * @var
+     * @var bool
      */
     protected $production;
 
@@ -104,7 +104,9 @@ class Client
     public function query($params)
     {
 
-        $queryBuilder = new QueryBuilder($this->addCredentialsToParams($params));
+        $params = $this->appendDefaults($params);
+
+        $queryBuilder = new QueryBuilder($params);
 
         $query = $queryBuilder->build();
 
@@ -123,6 +125,24 @@ class Client
     }
 
     /**
+     * Append default values to keys
+     * that were not provided.
+     *
+     * @param $params
+     * @return array
+     */
+    public function appendDefaults($params)
+    {
+
+        $params = $this->addCredentialsToParams($params);
+
+        $params = $this->evaluateDocumentType($params);
+
+        return $params;
+
+    }
+
+    /**
      * Add the credentials from the class' attributes
      * to the params array.
      *
@@ -134,6 +154,32 @@ class Client
 
         $params['05'] = empty($params['05']) ? $this->code : $params['05'];
         $params['06'] = empty($params['06']) ? $this->password : $params['06'];
+
+        return $params;
+
+    }
+
+    /**
+     * Set default values to some
+     * parameters base on document size.
+     *
+     * @param $params
+     * @return mixed
+     */
+    protected function evaluateDocumentType($params)
+    {
+
+        if (empty($params['12']))
+            return $params;
+
+        $document = $params['12'];
+        $isCpf = strlen($document) == 11;
+
+        if (empty($params['11']))
+            $params['11'] = $isCpf ? '1' : '2';
+
+        if (empty($params['07']))
+            $params['07'] = $isCpf ? 'BVSNET4F' : 'BVSNET4J';
 
         return $params;
 
@@ -172,5 +218,8 @@ class Client
         return $this->production ? $this->baseProductionUri : $this->baseTestUri;
 
     }
+
+
+
 
 }
