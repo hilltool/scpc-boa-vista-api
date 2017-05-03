@@ -223,6 +223,9 @@ class Client
         if (empty($params['07']))
             $params['07'] = $isCpf ? 'BVSNET4F' : 'BVSNET4J';
 
+        if (empty($params['14']))
+            $params['14'] = $isCpf ? 'XX' : 'FI';
+
         return $params;
 
     }
@@ -242,8 +245,8 @@ class Client
 
         if ($response['09'] == '9')
             throw new BoaVistaResponseException(
-                $response['12']['999']['03'],
-                $response['12']['999']['02']
+                $response['12']['999'][0]['03'],
+                $response['12']['999'][0]['02']
             );
 
     }

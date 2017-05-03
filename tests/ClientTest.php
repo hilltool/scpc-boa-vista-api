@@ -28,7 +28,7 @@ class ClientTest extends TestCase
 
         $params = array(
             '12' => '00193000180',
-            '13' => 'PA'
+            '13' => 'SP'
         );
 
         $client = new Client($this->code, $this->password);
@@ -78,6 +78,7 @@ class ClientTest extends TestCase
             '06' => 'password',
             '11' => '1',
             '07' => 'BVSNET4F',
+            '14' => 'XX',
         ), $client->appendDefaults($params));
 
         $params = array(
@@ -92,6 +93,7 @@ class ClientTest extends TestCase
             '06' => 'password',
             '11' => '2',
             '07' => 'BVSNET4J',
+            '14' => 'FI'
         ), $client->appendDefaults($params));
 
     }
