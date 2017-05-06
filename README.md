@@ -1,4 +1,4 @@
-#Contents
+# Contents
 
 - What's this?
 - How to install?
@@ -12,7 +12,7 @@
 - Testing
 - Contact
 
-#What's this?
+# What's this?
 
 A php client to consume SCPC Boa Vista's API.
 
@@ -20,12 +20,12 @@ This client was made to consume **only** the service "Protestos Nacionais ou Reg
 
 If the version of this service is different at the time you are reading this, this client **might not work as expected**.
 
-#How to install?
+# How to install?
 
 
     composer require artenes/scpc-boa-vista-api
 
-#How to use it?
+# How to use it?
 
 1. Create an instance of the Boa Vista client.
 
@@ -47,9 +47,9 @@ If the version of this service is different at the time you are reading this, th
 
     $returnCode = $response['09'];
 
-#How to use it in more details?
+# How to use it in more details?
 
-##Creating the ``Client`` instance
+## Creating the ``Client`` instance
 
 The ``Artenes\SCPCBoaVista\Client`` have **5 optinal parameters**:
 
@@ -71,7 +71,7 @@ The ``Artenes\SCPCBoaVista\Client`` have **5 optinal parameters**:
     - The client uses ``GuzzleHttp`` to make HTTP requests. If you wish to configure `GuzzleHttp`, pass the configuration options through this parameter. They will be sent straight to `GuzzleHttp` client's constructor.
     - Default: empty array.
 
-##Organizing the query parameters
+## Organizing the query parameters
 
 After creating the client, you will perform a query:
 
@@ -123,7 +123,7 @@ You can override any default value by providing it in the query parameters. For 
        '20' => 'S',
      ];
 
-##Dealing with errors
+## Dealing with errors
 
 By default the client will throw a ``Artenes\SCPCBoaVista\BoaVistaResponseException`` when the response from the API contains an error code.
 
@@ -160,7 +160,7 @@ In this case you have to process the response and check for the return code from
     
     }
     
-##Processing the response
+## Processing the response
 
 Each item of the array response contains:
 
@@ -343,7 +343,7 @@ Convert the query occurrence type from integer to string (in portuguese).
 
 Convert the company condition from integer to string (in portuguese).
 
-#Testing
+# Testing
 
 Just run
 
@@ -353,6 +353,6 @@ To run phpunit from the vendor folder.
 
 **Important**, the client test it is an integration test that will try to communicate with the Boa Vista API. In that test you have to provide a valid code and password to authenticate in the API. You also need to have your machine IP registered with Boa Vista system to allow you to make request to their API. 
 
-#Contact
+# Contact
 
 Any problems or any doubt just contact me at artenesama@gmail.com.
