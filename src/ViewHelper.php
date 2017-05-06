@@ -95,11 +95,15 @@ class ViewHelper
      */
     public function getError()
     {
+
+        if (! $this->hasError())
+            return '';
+
         return $this->response['12']['999'][0]['03'];
     }
 
     /**
-     * Get the formated content from a section of the item nº12.
+     * Get the formatted content from a section of the item nº12.
      *
      * @param $name
      * @return array
