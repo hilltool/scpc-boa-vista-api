@@ -341,7 +341,10 @@ class ViewHelper
     public function getValue($section, $index, $field)
     {
 
-        return $this->response['12'][$section][$index][$field];
+        if (!empty($this->response['12'][$section][$index][$field]))
+            return $this->response['12'][$section][$index][$field];
+
+        return '';
 
     }
 
@@ -378,7 +381,7 @@ class ViewHelper
      */
     public function formatDecimalPoint($value)
     {
-        $formatedValue = substr($value, 0, -2) . ',' . substr($value, -2);
+        $formatedValue = substr($value, 0, -2) . '.' . substr($value, -2);
         return ltrim($formatedValue, '0');
     }
 
